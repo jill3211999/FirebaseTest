@@ -72,23 +72,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             // Get user value
             self.peopleName.removeAll()
             
-//            var peopleNamesDic = snapshot.value as! Dictionary<String, String>
-            //            let username = value?["name1"] as? String ?? ""
-
             self.peopleName = snapshot.value as! Dictionary<String, String>
             
             //            取出最後一個數字，用在新增的時候
             let tmpStr = self.peopleName.keys.sorted(by: { firstKey, secondKey in
-                let key1Index = firstKey.index(firstKey.startIndex, offsetBy: 4) // 取 Item 字串後的值出來做排序
-                let key1 = Int(firstKey.substring(from: key1Index)) // 5
-                
-                let key2Index = secondKey.index(secondKey.startIndex, offsetBy: 4) // 取 Item 字串後的值出來做排序
-                let key2 = Int(secondKey.substring(from: key2Index)) // 6
-                
+                let key1 = Int((firstKey as NSString).substring(from: 4))
+                let key2 = Int((secondKey as NSString).substring(from: 4))
                 return key1! < key2! // 由小到大排序
-            }).last as! String
-            let tmpIndex = tmpStr.index(tmpStr.startIndex, offsetBy: 4)
-            self.lastNameCount = Int(tmpStr.substring(from: tmpIndex))!
+            }).last
+            self.lastNameCount = Int((tmpStr! as NSString).substring(from: 4))!
             
             self.tableView.reloadData()
         }) { (error) in
