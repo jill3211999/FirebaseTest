@@ -18,10 +18,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var peopleCount = 0
     var peopleName: Dictionary<String, String> = [:]
     var lastNameCount = 0
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        Database.database().isPersistenceEnabled = true
+        
+        super.viewDidLoad()
         getPeopleTable()
     }
 
@@ -30,9 +31,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
 
-    //        新增
+    //        新增、更新
     @IBAction func newPeople(_ sender: Any) {
-        //        creat，會把原本的全部用掉
+        //        creat，會把原本其他的全部蓋掉
         //        self.ref.setValue(["name3": "Enieen"])
         //        self.ref.child("people").setValue(["name1": "Willie"])
 
@@ -74,7 +75,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             self.peopleName = snapshot.value as! Dictionary<String, String>
             
-            //            取出最後一個數字，用在新增的時候
+            //  取出最後一個數字，用在新增的時候
             let tmpStr = self.peopleName.keys.sorted(by: { firstKey, secondKey in
                 let key1 = Int((firstKey as NSString).substring(from: 4))
                 let key2 = Int((secondKey as NSString).substring(from: 4))
